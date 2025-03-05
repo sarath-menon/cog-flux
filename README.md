@@ -51,10 +51,9 @@ Pull requests and issues are welcome! If you see a novel technique or feature yo
 * Use row-wise quantization
 * Port quantization and compilation code over to https://github.com/replicate/flux-fine-tuner
 
-## License
+# UV setup
 
-The code in this repository is licensed under the [Apache-2.0 License](LICENSE).
-
-FLUX.1 [dev] falls under the [`FLUX.1 [dev]` Non-Commercial License](https://huggingface.co/black-forest-labs/FLUX.1-dev/blob/main/LICENSE.md).
-
-FLUX.1 [schnell] falls under the [Apache-2.0 License](https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/apache-2.0.md).
+```
+uv add ipykernel
+uv run ipython kernel install --user --name=uv_test
+```

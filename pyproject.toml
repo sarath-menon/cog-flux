@@ -22,4 +22,5 @@ dependencies = [
     "pydash",
     "opencv-python>=4.11.0.86",
     "pydantic>=2.10.6",
+    "ipykernel>=6.29.5",
 ]
