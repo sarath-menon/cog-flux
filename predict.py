@@ -56,7 +56,7 @@ class Predictor:
         self.fp8_model = BflFp8Flux(
             FLUX_DEV_FP8,
             loaded_models=self.bf16_model.get_shared_models(),
-            torch_compile=True,
+            torch_compile=False,
             compilation_aspect_ratios=ASPECT_RATIOS,
             offload=self.should_offload(),
         )
