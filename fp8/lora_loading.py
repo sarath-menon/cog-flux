@@ -517,7 +517,6 @@ def apply_lora_weight_to_module(
 def convert_lora_weights(lora_path: str | Path, has_guidance: bool):
     logger.info(f"Loading LoRA weights for {lora_path}")
     lora_weights = load_file(lora_path, device="cuda")
-    print(f"Lora weights: {lora_weights}")
     is_kohya = any(".lora_down.weight" in k for k in lora_weights)
 
     # converting to diffusers to convert from diffusers is a bit circuitous at the moment but it works 
