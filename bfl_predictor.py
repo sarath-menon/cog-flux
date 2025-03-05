@@ -516,6 +516,11 @@ class BflFp8Flux(LoraMixin):
         )
         self.offload = offload
 
+        print(f"Loading fp8 model {flow_model_name}")
+        print(f"Compilation aspect ratios: {compilation_aspect_ratios}")
+        print(f"Weights download cache: {weights_download_cache}")
+        print(f"Restore lora from cloned weights: {restore_lora_from_cloned_weights}")
+
         if torch_compile:
             extra_args = {
                 "compile_whole_model": True,
