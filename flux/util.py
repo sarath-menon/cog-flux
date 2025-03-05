@@ -26,13 +26,15 @@ class ModelSpec:
 
 
 HF_HOME = "/workspace/models/flux_replicate"   
+LORA_WEIGHTS_PATH = "/workspace/models/lora_training/FLUX.1-dev"
+
 T5_URL = "https://weights.replicate.delivery/default/official-models/flux/t5/t5-v1_1-xxl.tar"
-T5_CACHE = f"{HF_HOME}/t5"
+T5_CACHE = f"{LORA_WEIGHTS_PATH}/text_encoder_2/model-00001-of-00002.safetensors"
 CLIP_URL = "https://weights.replicate.delivery/default/official-models/flux/clip/clip-vit-large-patch14.tar"
-CLIP_CACHE = f"{HF_HOME}/clip"
+CLIP_CACHE = f"{LORA_WEIGHTS_PATH}/text_encoder/model.safetensors"
 SCHNELL_CACHE = f"{HF_HOME}/schnell/schnell.sft"
 SCHNELL_URL = "https://weights.replicate.delivery/default/official-models/flux/schnell/schnell.sft"
-DEV_CACHE = f"{HF_HOME}/dev/dev.sft"
+DEV_CACHE = f"{LORA_WEIGHTS_PATH}/transformer/diffusion_pytorch_model-00001-of-00003.safetensors" 
 DEV_URL = "https://weights.replicate.delivery/default/official-models/flux/dev/dev.sft"
 DEV_CANNY_CACHE = f"{HF_HOME}/dev-canny/dev-canny.safetensors"
 DEV_CANNY_URL = "https://weights.replicate.delivery/default/black-forest-labs/ctrl-n-fill/flux1-canny-dev.safetensors"
@@ -40,7 +42,7 @@ DEV_DEPTH_CACHE = f"{HF_HOME}/dev-depth/dev-depth.safetensors"
 DEV_DEPTH_URL = "https://weights.replicate.delivery/default/black-forest-labs/ctrl-n-fill/flux1-depth-dev.safetensors"
 DEV_INPAINTING_CACHE = f"{HF_HOME}/dev-inpainting/dev-inpainting.safetensors"
 DEV_INPAINTING_URL = "https://weights.replicate.delivery/default/black-forest-labs/ctrl-n-fill/flux1-fill-dev.safetensors"
-AE_CACHE = f"{HF_HOME}/ae/ae.sft"
+AE_CACHE = f"{LORA_WEIGHTS_PATH}/ae.safetensors"
 AE_URL = "https://weights.replicate.delivery/default/official-models/flux/ae/ae.sft"
 SIGLIP_URL = "https://weights.replicate.delivery/default/google/siglip-so400m-patch14-384/model-bf16.tar"
 SIGLIP_CACHE = f"{HF_HOME}/siglip"
@@ -243,7 +245,7 @@ def load_flow_model(name: str, device: str | torch.device = "cuda", quantize: bo
         ckpt_path = Path(ckpt_path).stem + "_quantized.sft"
         print(f"Quantized checkpoint path: {ckpt_path}")
 
-    print("Loading checkpoint")
+    print("Loading checkpoint: ", ckpt_path)
     # load_sft doesn't support torch.device
     if ckpt_path is not None:
         sd = load_sft(ckpt_path, device=str(device))

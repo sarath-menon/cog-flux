@@ -36,7 +36,7 @@
   },
   "ckpt_path": "/workspace/models/flux_replicate/dev-fp8/dev-fp8.safetensors",
   "flux_url": "https://weights.replicate.delivery/default/official-models/flux/dev/dev-fp8.safetensors",
-  "ae_path": "/workspace/models/flux_replicate/ae/ae.sft",
+  "ae_path": "/workspace/models/lora_training/FLUX.1-dev/ae.safetensors",
   "repo_id": "n/a",
   "repo_flow": "n/a",
   "repo_ae": "n/a",
