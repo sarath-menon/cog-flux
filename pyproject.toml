@@ -1,0 +1,25 @@
+[project]
+name = "cog-flux"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "torch==2.6.0",
+    "torchvision",
+    "numpy",
+    "einops",
+    "fire",
+    "huggingface-hub",
+    "safetensors",
+    "sentencepiece",
+    "transformers",
+    "tokenizers",
+    "protobuf",
+    "diffusers",
+    "loguru",
+    "pybase64",
+    "pydash",
+    "opencv-python>=4.11.0.86",
+    "pydantic>=2.10.6",
+]

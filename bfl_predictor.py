@@ -5,7 +5,7 @@ from typing import List, Tuple
 
 from einops import rearrange
 
-from cog import Path
+from pathlib import Path
 from flux.modules.image_embedders import CannyImageEncoder
 from flux.sampling import (
     denoise,
