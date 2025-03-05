@@ -24,28 +24,30 @@ class ModelSpec:
     ae_path: str | None
     ae_url: str | None
 
+
+HF_HOME = "/workspace/models/flux_replicate"   
 T5_URL = "https://weights.replicate.delivery/default/official-models/flux/t5/t5-v1_1-xxl.tar"
-T5_CACHE = "./model-cache/t5"
+T5_CACHE = f"{HF_HOME}/t5"
 CLIP_URL = "https://weights.replicate.delivery/default/official-models/flux/clip/clip-vit-large-patch14.tar"
-CLIP_CACHE = "./model-cache/clip"
-SCHNELL_CACHE = "./model-cache/schnell/schnell.sft"
+CLIP_CACHE = f"{HF_HOME}/clip"
+SCHNELL_CACHE = f"{HF_HOME}/schnell/schnell.sft"
 SCHNELL_URL = "https://weights.replicate.delivery/default/official-models/flux/schnell/schnell.sft"
-DEV_CACHE = "./model-cache/dev/dev.sft"
+DEV_CACHE = f"{HF_HOME}/dev/dev.sft"
 DEV_URL = "https://weights.replicate.delivery/default/official-models/flux/dev/dev.sft"
-DEV_CANNY_CACHE = "./model-cache/dev-canny/dev-canny.safetensors"
+DEV_CANNY_CACHE = f"{HF_HOME}/dev-canny/dev-canny.safetensors"
 DEV_CANNY_URL = "https://weights.replicate.delivery/default/black-forest-labs/ctrl-n-fill/flux1-canny-dev.safetensors"
-DEV_DEPTH_CACHE = "./model-cache/dev-depth/dev-depth.safetensors"
+DEV_DEPTH_CACHE = f"{HF_HOME}/dev-depth/dev-depth.safetensors"
 DEV_DEPTH_URL = "https://weights.replicate.delivery/default/black-forest-labs/ctrl-n-fill/flux1-depth-dev.safetensors"
-DEV_INPAINTING_CACHE = "./model-cache/dev-inpainting/dev-inpainting.safetensors"
+DEV_INPAINTING_CACHE = f"{HF_HOME}/dev-inpainting/dev-inpainting.safetensors"
 DEV_INPAINTING_URL = "https://weights.replicate.delivery/default/black-forest-labs/ctrl-n-fill/flux1-fill-dev.safetensors"
-AE_CACHE = "./model-cache/ae/ae.sft"
+AE_CACHE = f"{HF_HOME}/ae/ae.sft"
 AE_URL = "https://weights.replicate.delivery/default/official-models/flux/ae/ae.sft"
 SIGLIP_URL = "https://weights.replicate.delivery/default/google/siglip-so400m-patch14-384/model-bf16.tar"
-SIGLIP_CACHE = "./model-cache/siglip"
+SIGLIP_CACHE = f"{HF_HOME}/siglip"
 REDUX_URL = "https://weights.replicate.delivery/default/black-forest-labs/ctrl-n-fill/flux1-redux-dev.safetensors"
-REDUX_CACHE = "./model-cache/redux/flux1-redux-dev.safetensors"
+REDUX_CACHE = f"{HF_HOME}/redux/flux1-redux-dev.safetensors"
 DEPTH_URL = "https://weights.replicate.delivery/default/liheyoung/depth-anything-large/flux-depth-model.tar"
-DEPTH_CACHE = "./model-cache/depth"
+DEPTH_CACHE = f"{HF_HOME}/depth"
 
 configs = {
     "flux-dev": ModelSpec(
