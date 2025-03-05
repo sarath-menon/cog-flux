@@ -57,3 +57,9 @@ Pull requests and issues are welcome! If you see a novel technique or feature yo
 uv add ipykernel
 uv run ipython kernel install --user --name=uv_test
 ```
+
+# Inference
+
+```
+uv run python predict.py
+```

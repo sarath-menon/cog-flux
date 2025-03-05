@@ -384,6 +384,13 @@ def apply_linear1_lora_weight_to_module(
     lora_scale: float = 1.0,
 ):
     lora_A, lora_B, alpha = lora_weights
+    
+    # Ensure all tensors are on the same device as module_weight
+    device = module_weight.device
+    lora_A = lora_A.to(device)
+    lora_B = lora_B.to(device)
+    if alpha is not None and isinstance(alpha, torch.Tensor):
+        alpha = alpha.to(device)
 
     if rank is None:
         rank = lora_B.shape[1]
@@ -430,6 +437,13 @@ def apply_attn_qkv_lora_weight_to_module(
     lora_scale: float = 1.0,
 ):
     lora_A, lora_B, alpha = lora_weights
+    
+    # Ensure all tensors are on the same device as module_weight
+    device = module_weight.device
+    lora_A = lora_A.to(device)
+    lora_B = lora_B.to(device)
+    if alpha is not None and isinstance(alpha, torch.Tensor):
+        alpha = alpha.to(device)
 
     if rank is None:
         rank = lora_B.shape[1]
@@ -472,9 +486,13 @@ def apply_lora_weight_to_module(
     lora_scale: float = 1.0,
 ):
     lora_A, lora_B, alpha = lora_weights
-
-    uneven_rank = lora_B.shape[1] != lora_A.shape[0]
-    rank_diff = lora_A.shape[0] / lora_B.shape[1]
+    
+    # Ensure all tensors are on the same device as module_weight
+    device = module_weight.device
+    lora_A = lora_A.to(device)
+    lora_B = lora_B.to(device)
+    if alpha is not None and isinstance(alpha, torch.Tensor):
+        alpha = alpha.to(device)
 
     if rank is None:
         rank = lora_B.shape[1]
@@ -484,23 +502,22 @@ def apply_lora_weight_to_module(
         alpha = rank
     else:
         alpha = alpha
-
     w_orig = module_weight
     w_up = lora_A  
     w_down = lora_B  
 
     if alpha != rank:
         w_up = w_up * alpha / rank
-    if uneven_rank:
-        w_down = w_down.repeat_interleave(int(rank_diff), dim=1)
 
-    fused_lora = lora_scale * torch.mm(w_down, w_up)
-    fused_weight = (w_orig.float() + fused_lora).to(torch.bfloat16)
-    return fused_weight  
+    w_out = torch.mm(w_down, w_up)
+    w_out = (w_orig.float() + lora_scale * w_out).to(torch.bfloat16)
+
+    return w_out
 
 def convert_lora_weights(lora_path: str | Path, has_guidance: bool):
     logger.info(f"Loading LoRA weights for {lora_path}")
     lora_weights = load_file(lora_path, device="cuda")
+    print(f"Lora weights: {lora_weights}")
     is_kohya = any(".lora_down.weight" in k for k in lora_weights)
 
     # converting to diffusers to convert from diffusers is a bit circuitous at the moment but it works 

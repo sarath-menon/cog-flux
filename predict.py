@@ -9,6 +9,7 @@ from bfl_predictor import BflBf16Predictor, BflControlNetFlux, BflFillFlux, BflF
 from diffusers_predictor import DiffusersFlux
 from flux.modules.conditioner import PreLoadedHFEmbedder
 from fp8.util import LoadedModels
+from weights import WeightsDownloadCache
 
 # Configure torch settings
 torch.set_float32_matmul_precision("high")
@@ -53,12 +54,16 @@ class Predictor:
     def __init__(self):
         self.base_setup()
         self.bf16_model = BflBf16Predictor(FLUX_DEV, offload=self.should_offload())
+        self.weights_cache = WeightsDownloadCache()
+
         self.fp8_model = BflFp8Flux(
             FLUX_DEV_FP8,
             loaded_models=self.bf16_model.get_shared_models(),
             torch_compile=False,
             compilation_aspect_ratios=ASPECT_RATIOS,
             offload=self.should_offload(),
+            weights_download_cache=self.weights_cache,
+            restore_lora_from_cloned_weights=False,
         )
 
     def base_setup(self):
@@ -89,6 +94,7 @@ class Predictor:
         lora_weights: str = Inputs.lora_weights,
         lora_scale: float = Inputs.lora_scale,
         megapixels: str = Inputs.megapixels,
+        
     ) -> List[str]:
         if image and go_fast:
             print("img2img not supported with fp8 quantization; running with bf16")
@@ -96,6 +102,7 @@ class Predictor:
 
         width, height = self.size_from_aspect_megapixels(aspect_ratio, megapixels)
         model = self.fp8_model if go_fast else self.bf16_model
+        
         model.handle_loras(lora_weights, lora_scale)
 
         imgs, np_imgs = model.predict(
@@ -139,5 +146,5 @@ def make_multiple_of_16(n):
 
 if __name__ == "__main__":
     predictor = Predictor()
-    results = predictor.predict(prompt="A beautiful landscape")
+    results = predictor.predict(prompt="A beautiful landscape", lora_weights="https://huggingface.co/XLabs-AI/flux-lora-collection/resolve/main/disney_lora.safetensors")
     print(f"Generated images: {results}")
