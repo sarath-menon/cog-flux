@@ -24,9 +24,9 @@ MODEL_URL_DEV = (
 )
 MODEL_URL_SCHNELL = "https://weights.replicate.delivery/default/black-forest-labs/FLUX.1-schnell/slim.tar"
 
-FLUX_DEV_PATH = "./workspace/models/hub/models--black-forest-labs--FLUX.1-dev"
-FLUX_SCHNELL_PATH = "./workspace/models/hub/models--black-forest-labs--FLUX.1-schnell"
-MODEL_CACHE = "./workspace/models/hub/"
+FLUX_DEV_PATH = "/workspace/models/lora_training/FLUX.1-dev"
+FLUX_SCHNELL_PATH = "/workspace/models/lora_training/FLUX.1-schnell"
+MODEL_CACHE = "/workspace/models/lora_training/FLUX.1-dev"
 
 MAX_IMAGE_SIZE = 1440
 
