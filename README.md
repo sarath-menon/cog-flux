@@ -60,6 +60,7 @@ Install uv
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> /root/.bashrc
+source /root/.bashrc
 ```
 
 To install pget (efficient model weight downloading tool from replicate )
