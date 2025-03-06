@@ -51,7 +51,25 @@ Pull requests and issues are welcome! If you see a novel technique or feature yo
 * Use row-wise quantization
 * Port quantization and compilation code over to https://github.com/replicate/flux-fine-tuner
 
-# UV setup
+# Usage
+
+## Installation
+
+Install uv
+
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> /root/.bashrc
+```
+
+To install pget (efficient model weight downloading tool from replicate )
+
+```
+curl -o /usr/local/bin/pget -L "https://github.com/replicate/pget/releases/download/v0.8.2/pget_linux_x86_64" && chmod +x /usr/local/bin/pget
+```
+
+
+## For jupyter notebook
 
 ```
 uv add ipykernel
