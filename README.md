@@ -85,6 +85,13 @@ uv run ipython kernel install --user --name=uv_test
 
 # Inference
 
+Flux-dev quantized
 ```
 uv run python predict.py
+```
+
+Flux dev wth hyer sd lora
+
+```
+uv run python development/hyper-sd.py
 ```

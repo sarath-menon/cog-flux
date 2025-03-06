@@ -20,10 +20,18 @@ pipe.fuse_lora(lora_scale=0.125)
 pipe.to("cuda", dtype=torch.float16)
 
 #%%
+
+pipe.unload_lora_weights()
+# save locally
+pipe.save_pretrained("path/to/fused-pipeline")
+
+#%%
 print("Generating image...")
 image=pipe(prompt="a very british rodent sipping tea", num_inference_steps=8, guidance_scale=3.5).images[0]
 image.save("output.png")
 print("Image saved as output.png")
+
+
 
 # %%
 
