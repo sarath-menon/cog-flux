@@ -70,6 +70,12 @@ curl -o /usr/local/bin/pget -L "https://github.com/replicate/pget/releases/downl
 ```
 
 
+## Weights dowmload
+
+```
+pget -xf https://weights.replicate.delivery/default/black-forest-labs/FLUX.1-dev/files.tar lora_training
+```
+
 ## For jupyter notebook
 
 ```
