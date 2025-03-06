@@ -4,11 +4,14 @@ from diffusers import FluxPipeline,  FluxTransformer2DModel
 from diffusers.utils import load_image
 from transformers import CLIPTextModel, T5EncoderModel, CLIPTokenizer, T5TokenizerFast
 from diffusers import AutoencoderKL
+import os
 
 #%%
 # pipe = FluxPipeline.from_pretrained(
 #     "black-forest-labs/FLUX.1-dev", torch_dtype=torch.bfloat163333
 # ).to("cuda")
+
+
 
 LORA_WEIGHTS_PATH = "/workspace/models/lora_training/FLUX.1-dev"
 text_encoder = CLIPTextModel.from_pretrained(LORA_WEIGHTS_PATH + "/text_encoder")
@@ -17,12 +20,16 @@ text_encoder_2 = T5EncoderModel.from_pretrained(LORA_WEIGHTS_PATH + "/text_encod
 tokenizer = CLIPTokenizer.from_pretrained(LORA_WEIGHTS_PATH + "/tokenizer")
 tokenizer_2 = T5TokenizerFast.from_pretrained(LORA_WEIGHTS_PATH + "/tokenizer_2")
 vae = AutoencoderKL.from_pretrained(LORA_WEIGHTS_PATH + "/vae")
-transformer = FluxTransformer2DModel.from_pretrained(LORA_WEIGHTS_PATH + "/transformer")
+
+#%%
+dtype = torch.bfloat16
+transformer = FluxTransformer2DModel.from_single_file("/workspace/models/flux_replicate/dev-fp8/dev-fp8.safetensors", subfolder="transformer", dtype=dtype, token=os.environ["HF_TOKEN"])
+
 
 #%%
 
-
 pipe = FluxPipeline.from_pretrained(
+                LORA_WEIGHTS_PATH,
                 transformer = transformer,
                 vae=vae,
                 text_encoder=text_encoder,
