@@ -23,7 +23,6 @@ text_encoder_8bit = T5EncoderModel.from_pretrained(
     base_model_id,
     subfolder="text_encoder_2",
     quantization_config=quant_config,
-    torch_dtype=torch.float16,
 )
 
 #%%
@@ -32,7 +31,6 @@ transformer_8bit = FluxTransformer2DModel.from_pretrained(
     base_model_id,
     subfolder="transformer",
     quantization_config=quant_config,
-    torch_dtype=torch.float16,
 )
 #%%
 
@@ -42,14 +40,13 @@ pipe = FluxPipeline.from_pretrained(
     base_model_id,
     text_encoder_2=text_encoder_8bit,
     transformer=transformer_8bit,
-    torch_dtype=torch.float16,
     device_map="balanced",
-    token=os.environ["HF_TOKEN"]
+    # token=os.environ["HF_TOKEN"]
 )
 #%%
 pipe.load_lora_weights(hf_hub_download(repo_name, ckpt_name))
 pipe.fuse_lora(lora_scale=0.125)
-pipe.to("cuda", dtype=torch.float16)
+# pipe.to("cuda", dtype=torch.float16)
 
 #%%
 pipe.unload_lora_weights()
@@ -58,7 +55,11 @@ pipe.unload_lora_weights()
 pipe.save_pretrained("/workspace/models/fused_loras")
 
 #%%
+pipe.reset_device_map()
+pipe.to("cuda", dtype=torch.float16)
 print("Generating image...")
-image=pipe(prompt="a very british rodent sipping tea", num_inference_steps=8, guidance_scale=3.5).images[0]
+image=pipe(prompt="a very british rodent in glasses sipping tea", num_inference_steps=8, guidance_scale=3.5).images[0]
 image.save("output.png")
 print("Image saved as output.png")
+
+# %%
