@@ -53,7 +53,7 @@ class Inputs:
 class Predictor:
     def __init__(self):
         self.base_setup()
-        self.bf16_model = BflBf16Predictor(FLUX_DEV, offload=self.should_offload())
+        self.bf16_model = BflBf16Predictor(FLUX_DEV, offload=self.should_offload(),restore_lora_from_cloned_weights=True)
         self.weights_cache = WeightsDownloadCache()
 
         self.fp8_model = BflFp8Flux(
@@ -63,7 +63,7 @@ class Predictor:
             compilation_aspect_ratios=ASPECT_RATIOS,
             offload=self.should_offload(),
             weights_download_cache=self.weights_cache,
-            restore_lora_from_cloned_weights=False,
+            restore_lora_from_cloned_weights=True,
         )
 
     def base_setup(self):
@@ -96,9 +96,9 @@ class Predictor:
         megapixels: str = Inputs.megapixels,
         
     ) -> List[str]:
-        # if image and go_fast:
-        #     print("img2img not supported with fp8 quantization; running with bf16")
-        #     go_fast = False
+        if image and go_fast:
+            print("img2img not supported with fp8 quantization; running with bf16")
+            go_fast = False
 
         width, height = self.size_from_aspect_megapixels(aspect_ratio, megapixels)
         model = self.fp8_model if go_fast else self.bf16_model
@@ -151,9 +151,9 @@ if __name__ == "__main__":
     # results = predictor.predict(prompt="A man eating ice cream")
 
 
-    # results = predictor.predict(prompt="A man eating ice cream", lora_weights="https://huggingface.co/XLabs-AI/flux-lora-collection/resolve/main/disney_lora.safetensors"
-    # )
+    results = predictor.predict(prompt="A handsome man in a suit, 25 years old, cool, futuristic, eating a pizza", lora_weights="https://huggingface.co/XLabs-AI/flux-lora-collection/resolve/main/mjv6_lora.safetensors"
+    )
 
-    results = predictor.predict(prompt="A man eating ice cream", image = "/home/cog-flux/resources/images/cr7.png")
+    # results = predictor.predict(prompt="A man eating ice cream", image = "/home/cog-flux/resources/images/cr7.png")
 
     print(f"Generated images: {results}")
