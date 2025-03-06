@@ -22,7 +22,16 @@ dependencies = [
     "pydash",
     "opencv-python>=4.11.0.86",
     "pydantic>=2.10.6",
-    "ipykernel>=6.29.5",
     "accelerate>=1.4.0",
     "dotenv>=0.9.9",
+    "peft>=0.14.0",
+    "bitsandbytes>=0.45.3",
 ]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+]
+
+[tool.uv.sources]
+peft = { git = "https://github.com/BenjaminBossan/peft" }

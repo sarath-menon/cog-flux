@@ -1,5 +1,5 @@
-#%%
 
+#%%
 import dotenv
 dotenv.load_dotenv()
 
@@ -8,7 +8,8 @@ from diffusers import FluxPipeline
 from huggingface_hub import hf_hub_download
 base_model_id = "/workspace/models/lora_training/FLUX.1-dev"
 repo_name = "ByteDance/Hyper-SD"
-# Take 8-steps lora as an example
+
+# Take 8-steps lora as an example 
 ckpt_name = "Hyper-FLUX.1-dev-8steps-lora.safetensors"
 import os
 

@@ -53,6 +53,19 @@ wheels = [
 ]
 
 [[package]]
+name = "bitsandbytes"
+version = "0.45.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "torch" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/20/0f/3a5f062c0ed2252ed128ff028b36d2a46a763a2919b00f12ca5274493ff3/bitsandbytes-0.45.3-py3-none-manylinux_2_24_x86_64.whl", hash = "sha256:720d67ffa8a5c61c958fb62517e8abbb2ab0ac1b33b66506ae911cb34c836c70", size = 76058963 },
+    { url = "https://files.pythonhosted.org/packages/dd/e4/42d721904d5841f029f8af69a8609980fb160cca435cb547eb1780872340/bitsandbytes-0.45.3-py3-none-win_amd64.whl", hash = "sha256:7251d71814a653b2b78b69149f1e88753598688c760c99cbbfb0512ba4ea39c6", size = 75429768 },
+]
+
+[[package]]
 name = "certifi"
 version = "2025.1.31"
 source = { registry = "https://pypi.org/simple" }
@@ -135,15 +148,16 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "accelerate" },
+    { name = "bitsandbytes" },
     { name = "diffusers" },
     { name = "dotenv" },
     { name = "einops" },
     { name = "fire" },
     { name = "huggingface-hub" },
-    { name = "ipykernel" },
     { name = "loguru" },
     { name = "numpy" },
     { name = "opencv-python" },
+    { name = "peft" },
     { name = "protobuf" },
     { name = "pybase64" },
     { name = "pydantic" },
@@ -156,18 +170,24 @@ dependencies = [
     { name = "transformers" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "ipykernel" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "accelerate", specifier = ">=1.4.0" },
+    { name = "bitsandbytes", specifier = ">=0.45.3" },
     { name = "diffusers" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "einops" },
     { name = "fire" },
     { name = "huggingface-hub" },
-    { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "loguru" },
     { name = "numpy" },
     { name = "opencv-python", specifier = ">=4.11.0.86" },
+    { name = "peft", git = "https://github.com/BenjaminBossan/peft" },
     { name = "protobuf" },
     { name = "pybase64" },
     { name = "pydantic", specifier = ">=2.10.6" },
@@ -179,6 +199,9 @@ requires-dist = [
     { name = "torchvision" },
     { name = "transformers" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "ipykernel", specifier = ">=6.29.5" }]
 
 [[package]]
 name = "colorama"
@@ -731,6 +754,23 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/66/94/68e2e17afaa9169cf6412ab0f28623903be73d1b32e208d9e8e541bb086d/parso-0.8.4.tar.gz", hash = "sha256:eb3a7b58240fb99099a345571deecc0f9540ea5f4dd2fe14c2a99d6b281ab92d", size = 400609 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c6/ac/dac4a63f978e4dcb3c6d3a78c4d8e0192a113d288502a1216950c41b1027/parso-0.8.4-py2.py3-none-any.whl", hash = "sha256:a418670a20291dacd2dddc80c377c5c3791378ee1e8d12bffc35420643d43f18", size = 103650 },
+]
+
+[[package]]
+name = "peft"
+version = "0.14.1.dev0"
+source = { git = "https://github.com/BenjaminBossan/peft#24150d0e41fa8a6fc998980e73a96dede0b33ffc" }
+dependencies = [
+    { name = "accelerate" },
+    { name = "huggingface-hub" },
+    { name = "numpy" },
+    { name = "packaging" },
+    { name = "psutil" },
+    { name = "pyyaml" },
+    { name = "safetensors" },
+    { name = "torch" },
+    { name = "tqdm" },
+    { name = "transformers" },
 ]
 
 [[package]]
