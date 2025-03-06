@@ -96,9 +96,9 @@ class Predictor:
         megapixels: str = Inputs.megapixels,
         
     ) -> List[str]:
-        if image and go_fast:
-            print("img2img not supported with fp8 quantization; running with bf16")
-            go_fast = False
+        # if image and go_fast:
+        #     print("img2img not supported with fp8 quantization; running with bf16")
+        #     go_fast = False
 
         width, height = self.size_from_aspect_megapixels(aspect_ratio, megapixels)
         model = self.fp8_model if go_fast else self.bf16_model
@@ -148,12 +148,12 @@ if __name__ == "__main__":
     predictor = Predictor()
 
 
-    results = predictor.predict(prompt="A man eating ice cream")
+    # results = predictor.predict(prompt="A man eating ice cream")
 
 
     # results = predictor.predict(prompt="A man eating ice cream", lora_weights="https://huggingface.co/XLabs-AI/flux-lora-collection/resolve/main/disney_lora.safetensors"
     # )
 
-    # results = predictor.predict(prompt="A man eating ice cream", image = "/home/cog-flux/resources/images/cr7.png")
+    results = predictor.predict(prompt="A man eating ice cream", image = "/home/cog-flux/resources/images/cr7.png")
 
     print(f"Generated images: {results}")
