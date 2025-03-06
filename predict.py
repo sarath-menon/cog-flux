@@ -146,5 +146,14 @@ def make_multiple_of_16(n):
 
 if __name__ == "__main__":
     predictor = Predictor()
-    results = predictor.predict(prompt="A beautiful landscape", lora_weights="https://huggingface.co/XLabs-AI/flux-lora-collection/resolve/main/disney_lora.safetensors")
+
+
+    results = predictor.predict(prompt="A man eating ice cream")
+
+
+    # results = predictor.predict(prompt="A man eating ice cream", lora_weights="https://huggingface.co/XLabs-AI/flux-lora-collection/resolve/main/disney_lora.safetensors"
+    # )
+
+    # results = predictor.predict(prompt="A man eating ice cream", image = "/home/cog-flux/resources/images/cr7.png")
+
     print(f"Generated images: {results}")

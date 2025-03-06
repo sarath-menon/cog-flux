@@ -160,6 +160,9 @@ class BflBf16Predictor(LoraMixin):
             self.flow_model_name, device="cpu" if self.offload else device
         )
 
+        # Save a copy of the model weights to allow proper offload re-materialization
+        self._model_state_dict = self.model.state_dict()
+
         self.num_steps = 4 if self.flow_model_name == FLUX_SCHNELL else 28
         self.shift = self.flow_model_name != FLUX_SCHNELL
         self.compile_run = False
@@ -297,6 +300,9 @@ class BflBf16Predictor(LoraMixin):
 
         if self.offload:
             self.t5, self.clip = self.t5.to(torch_device), self.clip.to(torch_device)
+            # Allocate model storage on the target device and reload weights
+            self.model = self.model.to_empty(device=torch_device)
+            self.model.load_state_dict(self._model_state_dict)
 
         inp = self.prepare(x, [prompt] * num_outputs, **prepare_kwargs)
 
