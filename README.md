@@ -79,8 +79,8 @@ pget -xf https://weights.replicate.delivery/default/black-forest-labs/FLUX.1-dev
 ## For jupyter notebook
 
 ```
-uv add ipykernel
-uv run ipython kernel install --user --name=uv_test
+uv add --dev ipykernel
+uv run ipython kernel install --user --env VIRTUAL_ENV $(pwd)/.venv --name=project
 ```
 
 # Inference
